@@ -1,0 +1,82 @@
+.box{
+	width: 100%;
+height: 100%;
+background-color: rgba(1,1,1,.5);
+z-index: 10001;
+position: fixed;
+display: none;
+}
+
+h1{
+	font-size: 4em !important;
+	text-align: center;
+	width: 100%;
+	color: rgba(255,255,255,.6);
+}
+.contentBox{
+	display: none;
+	width: 60%;
+	height: 400px;
+	margin: 0 auto;
+	background:rgba(255,255,255,.8);
+	border-radius: 5px;
+	padding: 10px 20px;
+	text-align: center;
+}
+p{
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.button-xlarge.pure-button {
+	font-size: 125%;
+	 background: rgba(28, 184, 65, .48);
+	 margin-top: 55px;
+}
+.citySwitch{
+	width: 30px;
+	height: 30px;
+}
+.citySwitch img {
+width: 15px;
+height: 15px;
+padding-top: 5px;
+}
+.timeController{
+	margin-left: -30%;
+}
+.pure-form-aligned .pure-control-group {
+	margin-bottom: 1em !important;
+}
+#timezoneForm{
+	margin-top: 5%;
+}
+.pac-container{
+	z-index: 99999 !important;
+}
+.ui-menu .ui-menu-item a{
+	z-index: 10101010 !important;
+}
+.ui-autocomplete{
+	z-index: 10101010 !important
+}
+ul{
+	padding-left: 5px !important;
+	margin: 0 !important;
+list-style-type: none;
+list-style-position: inside;
+width: 23% !important;
+background:rgba(255,255,255,.8);
+border-radius: 4px;
+font-size: 14px;
+}
+.ui-state-focus{
+background:rgba(173,216,230,.8);
+	}
+.ui-helper-hidden-accessible{
+	display: none;
+}
+.ui-menu-item{
+	line-height: 2em;
+	border-bottom: solid rgb(25,25,25) 1px;
+}

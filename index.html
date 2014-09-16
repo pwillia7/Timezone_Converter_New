@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ptkwilliams</title>
+  
+    <link rel="stylesheet" href="css/main.css">
+    <!-- pure css helpers -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+<body>
+
+	<div id='main'>
+    <div class="box box1">
+  		<h1>TIMEZONE CONVERTER</h1>
+      <div class="contentBox contentBox1">
+        <p>Need to convert times between places or timezones? Timezone converter is here to help. Just click the Let's Go button below to get started.</p>
+
+        <button id="go1" class="button-xlarge pure-button">Let's Go!</button>
+
+      </div>
+     </div> 
+    <div class="box box2">
+      <h1>TIMEZONE CONVERTER</h1>
+      <div class="contentBox contentBox2">
+        <!-- conversion form -->
+        <form id="timezoneForm" class="pure-form pure-form-aligned">
+          <fieldset>
+              <legend>Use the options below to convert from one location or timezone to another. Use the buttons on the right to switch between timezone and location</legend>
+              <div class="pure-control-group timeController">
+               <label for="time">Time in first city</label>
+               <select id="time">
+                <option value="0">12 AM</option>
+                <option value="1">1 AM</option>
+                <option value="2">2 AM</option>
+                <option value="3">3 AM</option>
+                <option value="4">4 AM</option>
+                <option value="5">5 AM</option>
+                <option value="6">6 AM</option>
+                <option value="7">7 AM</option>
+                <option value="8">8 AM</option>
+                <option value="9">9 AM</option>
+                <option value="10">10 AM</option>
+                <option value="11">11 AM</option>
+                <option value="12">12 PM</option>
+                <option value="13">1 PM</option>
+                <option value="14">2 PM</option>
+                <option value="15">3 PM</option>
+                <option value="16">4 PM</option>
+                <option value="17">5 PM</option>
+                <option value="18">6 PM</option>
+                <option value="19">7 PM</option>
+                <option value="20">8 PM</option>
+                <option value="21">9 PM</option>
+                <option value="22">10 PM</option>
+                <option value="23">11 PM</option>
+              </select>
+              </div>
+              <div class="pure-control-group input-group-1">
+                <label for="firstCity">First City</label>
+                <input autocomplete="off" id="firstCity" type="text" placeholder="First City e.g. Shanghai">
+                <button class="citySwitch citySwitch1"><img src="img/globe.ico" alt=""></button>
+              </div>
+              <div class="pure-control-group input-group-1" style="display: none;">
+                <label for="firstTimezone">First Timezone</label>
+                <input autocomplete="off" id="firstTimezone" type="text" placeholder="First Timezone e.g. CST">
+                <button class="citySwitch citySwitch1"><img src="img/globe.ico" alt=""></button>
+              </div>
+              <div class="pure-control-group input-group-2">
+                <label for="secondCity">Second City</label>
+                <input autocomplete="off" id="secondCity" type="text" placeholder="Second City e.g. London">
+                <button class="citySwitch citySwitch2"><img src="img/globe.ico" alt=""></button>
+              </div>
+              <div class="pure-control-group input-group-2" style="display: none;">
+                <label for="secondTimezone">Second Timezone</label>
+                <input autocomplete="off" id="secondTimezone" type="text" placeholder="Second Timezone e.g. GMT">
+                <button class="citySwitch citySwitch2"><img src="img/globe.ico" alt=""></button>
+              </div>
+              
+
+              <button type="submit" class="button-xlarge pure-button">Convert</button>
+          </fieldset>
+        </form>
+
+
+
+      </div>
+    </div> 
+  </div>
+  <div id='background'></div>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/main.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  
+  <script>
+      var input = document.getElementById('firstCity');
+      options = {};
+      var autocomplete = new google.maps.places.Autocomplete(input, options);
+      var input2 = document.getElementById('secondCity');
+      var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+
+      // Timezone Autocomplete
+      $(function() {
+    var availableTags = [
+            "ACDT | Australian Central Daylight Time | +10:30",
+            "ACST | Australian Central Standard Time | +09:30",
+            "ACT | ASEAN Common Time | +08",
+            "ADT | Atlantic Daylight Time | -03",
+            "AEDT | Australian Eastern Daylight Time | +11",
+            "AEST | Australian Eastern Standard Time | +10",
+            "AFT | Afghanistan Time | +04:30",
+            "AKDT | Alaska Daylight Time | -08",
+            "AKST | Alaska Standard Time | -09",
+            "AMST | Amazon Summer Time (Brazil)[1] | -03",
+            "AMST | Armenia Summer Time | +05",
+            "AMT | Amazon Time (Brazil)[2] | -04",
+            "AMT | Armenia Time | +04",
+            "ART | Argentina Time | -03",
+            "AST | Arabia Standard Time | +03",
+            "AST | Atlantic Standard Time | -04",
+            "AWDT | Australian Western Daylight Time | +09",
+            "AWST | Australian Western Standard Time | +08",
+            "AZOST | Azores Standard Time | -01",
+            "AZT | Azerbaijan Time | +04",
+            "BDT | Brunei Time | +08",
+            "BIOT | British Indian Ocean Time | +06",
+            "BIT | Baker Island Time | -12",
+            "BOT | Bolivia Time | -04",
+            "BRT | Brasilia Time | -03",
+            "BST | Bangladesh Standard Time | +06",
+            "BST | British Summer Time (British Standard Time from Feb 1968 to Oct 1971) | +01",
+            "BTT | Bhutan Time | +06",
+            "CAT | Central Africa Time | +02",
+            "CCT | Cocos Islands Time | +06:30",
+            "CDT | Central Daylight Time (North America) | -05",
+            "CDT | Cuba Daylight Time[3] | -04",
+            "CEDT | Central European Daylight Time | +02",
+            "CEST | Central European Summer Time (Cf. HAEC) | +02",
+            "CET | Central European Time | +01",
+            "CHADT | Chatham Daylight Time | +13:45",
+            "CHAST | Chatham Standard Time | +12:45",
+            "CHOT | Choibalsan | +08",
+            "ChST | Chamorro Standard Time | +10",
+            "CHUT | Chuuk Time | +10",
+            "CIST | Clipperton Island Standard Time | -08",
+            "CIT | Central Indonesia Time | +08",
+            "CKT | Cook Island Time | -10",
+            "CLST | Chile Summer Time | -03",
+            "CLT | Chile Standard Time | -04",
+            "COST | Colombia Summer Time | -04",
+            "COT | Colombia Time | -05",
+            "CST | Central Standard Time (North America) | -06",
+            "CST | China Standard Time | +08",
+            "CST | Central Standard Time (Australia) | +09:30",
+            "CST | Central Summer Time (Australia) | +10:30",
+            "CST | Cuba Standard Time | -05",
+            "CT | China time | +08",
+            "CVT | Cape Verde Time | -01",
+            "CWST | Central Western Standard Time (Australia) | +08:45",
+            "CXT | Christmas Island Time | +07",
+            "DAVT | Davis Time | +07",
+            "DDUT | Dumont d'Urville Time | +10",
+            "DFT | AIX specific equivalent of Central European Time[4] | +01",
+            "EASST | Easter Island Standard Summer Time | -05",
+            "EAST | Easter Island Standard Time | -06",
+            "EAT | East Africa Time | +03",
+            "ECT | Eastern Caribbean Time (does not recognise DST) | -04",
+            "ECT | Ecuador Time | -05",
+            "EDT | Eastern Daylight Time (North America) | -04",
+            "EEDT | Eastern European Daylight Time | +03",
+            "EEST | Eastern European Summer Time | +03",
+            "EET | Eastern European Time | +02",
+            "EGST | Eastern Greenland Summer Time",
+            "EGT | Eastern Greenland Time | -01",
+            "EIT | Eastern Indonesian Time | +09",
+            "EST | Eastern Standard Time (North America) | -05",
+            "EST | Eastern Standard Time (Australia) | +10",
+            "FET | Further-eastern European Time | +03",
+            "FJT | Fiji Time | +12",
+            "FKST | Falkland Islands Standard Time | -03",
+            "FKST | Falkland Islands Summer Time | -03",
+            "FKT | Falkland Islands Time | -04",
+            "FNT | Fernando de Noronha Time | -02",
+            "GALT | Galapagos Time | -06",
+            "GAMT | Gambier Islands | -09",
+            "GET | Georgia Standard Time | +04",
+            "GFT | French Guiana Time | -03",
+            "GILT | Gilbert Island Time | +12",
+            "GIT | Gambier Island Time | -09",
+            "GMT | Greenwich Mean Time",
+            "GST | South Georgia and the South Sandwich Islands | -02",
+            "GST | Gulf Standard Time | +04",
+            "GYT | Guyana Time | -04",
+            "HADT | Hawaii-Aleutian Daylight Time | -09",
+            "HAEC | Heure Avancée d'Europe Centrale francised name for CEST | +02",
+            "HAST | Hawaii-Aleutian Standard Time | -10",
+            "HKT | Hong Kong Time | +08",
+            "HMT | Heard and McDonald Islands Time | +05",
+            "HOVT | Khovd Time | +07",
+            "HST | Hawaii Standard Time | -10",
+            "ICT | Indochina Time | +07",
+            "IDT | Israel Daylight Time | +03",
+            "IOT | Indian Ocean Time | +03",
+            "IRDT | Iran Daylight Time | +08",
+            "IRKT | Irkutsk Time | +09",
+            "IRST | Iran Standard Time | +03:30",
+            "IST | Indian Standard Time | +05:30",
+            "IST | Irish Standard Time[5] | +01",
+            "IST | Israel Standard Time | +02",
+            "JST | Japan Standard Time | +09",
+            "KGT | Kyrgyzstan time | +06",
+            "KOST | Kosrae Time | +11",
+            "KRAT | Krasnoyarsk Time | +07",
+            "KST | Korea Standard Time | +09",
+            "LHST | Lord Howe Standard Time | +10:30",
+            "LHST | Lord Howe Summer Time | +11",
+            "LINT | Line Islands Time | +14",
+            "MAGT | Magadan Time | +12",
+            "MART | Marquesas Islands Time | -09:30",
+            "MAWT | Mawson Station Time | +05",
+            "MDT | Mountain Daylight Time (North America) | -06",
+            "MET | Middle European Time Same zone as CET | +01",
+            "MEST | Middle European Saving Time Same zone as CEST | +02",
+            "MHT | Marshall Islands | +12",
+            "MIST | Macquarie Island Station Time | +11",
+            "MIT | Marquesas Islands Time | -09:30",
+            "MMT | Myanmar Time | +06:30",
+            "MSK | Moscow Time | +04",
+            "MST | Malaysia Standard Time | +08",
+            "MST | Mountain Standard Time (North America) | -07",
+            "MST | Myanmar Standard Time | +06:30",
+            "MUT | Mauritius Time | +04",
+            "MVT | Maldives Time | +05",
+            "MYT | Malaysia Time | +08",
+            "NCT | New Caledonia Time | +11",
+            "NDT | Newfoundland Daylight Time | -02:30",
+            "NFT | Norfolk Time | +11:30",
+            "NPT | Nepal Time | +05:45",
+            "NST | Newfoundland Standard Time | -03:30",
+            "NT | Newfoundland Time | -03:30",
+            "NUT | Niue Time | -11",
+            "NZDT | New Zealand Daylight Time | +13",
+            "NZST | New Zealand Standard Time | +12",
+            "OMST | Omsk Time | +07",
+            "ORAT | Oral Time | +05",
+            "PDT | Pacific Daylight Time (North America) | -07",
+            "PET | Peru Time | -05",
+            "PETT | Kamchatka Time | +12",
+            "PGT | Papua New Guinea Time | +10",
+            "PHOT | Phoenix Island Time | +13",
+            "PHT | Philippine Time | +08",
+            "PKT | Pakistan Standard Time | +05",
+            "PMDT | Saint Pierre and Miquelon Daylight time | -02",
+            "PMST | Saint Pierre and Miquelon Standard Time | -03",
+            "PONT | Pohnpei Standard Time | +11",
+            "PST | Pacific Standard Time (North America) | -08",
+            "PYST | Paraguay Summer Time (Brazil)[6] | -03",
+            "PYT | Paraguay Time (Brazil)[7] | -04",
+            "RET | Réunion Time | +04",
+            "ROTT | Rothera Research Station Time | -03",
+            "SAKT | Sakhalin Island time | +11",
+            "SAMT | Samara Time | +04",
+            "SAST | South African Standard Time | +02",
+            "SBT | Solomon Islands Time | +11",
+            "SCT | Seychelles Time | +04",
+            "SGT | Singapore Time | +08",
+            "SLST | Sri Lanka Time | +05:30",
+            "SRT | Suriname Time | -03",
+            "SST | Samoa Standard Time | -11",
+            "SST | Singapore Standard Time | +08",
+            "SYOT | Showa Station Time | +03",
+            "TAHT | Tahiti Time | -10",
+            "THA | Thailand Standard Time | +07",
+            "TFT | Indian/Kerguelen | +05",
+            "TJT | Tajikistan Time | +05",
+            "TKT | Tokelau Time | +14",
+            "TLT | Timor Leste Time | +09",
+            "TMT | Turkmenistan Time | +05",
+            "TOT | Tonga Time | +13",
+            "TVT | Tuvalu Time | +12",
+            "UCT | Coordinated Universal Time",
+            "ULAT | Ulaanbaatar Time | +08",
+            "UTC | Coordinated Universal Time",
+            "UYST | Uruguay Summer Time | -02",
+            "UYT | Uruguay Standard Time | -03",
+            "UZT | Uzbekistan Time | +05",
+            "VET | Venezuelan Standard Time | -04:30",
+            "VLAT | Vladivostok Time | +10",
+            "VOLT | Volgograd Time | +04",
+            "VOST | Vostok Station Time | +06",
+            "VUT | Vanuatu Time | +11",
+            "WAKT | Wake Island Time | +12",
+            "WAST | West Africa Summer Time | +02",
+            "WAT | West Africa Time | +01",
+            "WEDT | Western European Daylight Time | +01",
+            "WEST | Western European Summer Time | +01",
+            "WET | Western European Time",
+            "WST | Western Standard Time | +08",
+            "YAKT | Yakutsk Time | +10",
+            "YEKT | Yekaterinburg Time | +06",
+            "Z | Zulu Time (Coordinated Universal Time)"
+          ];
+    $( "#firstTimezone" ).autocomplete({
+      source: function(request, response) {
+        var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+        response(results.slice(0, 10));
+    }
+    });
+    $( "#secondTimezone" ).autocomplete({
+      source: function(request, response) {
+        var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+        response(results.slice(0, 10));
+    }
+    });
+
+
+  });
+  </script>
+
+
+
+</body>
+</html>
