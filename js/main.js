@@ -31,3 +31,107 @@ $(".citySwitch2").click(function(event){
   document.getElementById('secondCity').value = '';
   $('.input-group-2').toggle();
 });
+
+
+$('#convert').click(function(event){
+  event.preventDefault();
+  search();});
+
+// Begin Converter
+function search(){
+  // Arrays for matching Timezone inputs to cities that can be called through the google API
+  var UTCs = ["-12", "-11", "-10", "-09:30", "-09", "-08", "-07", "-06", "-05", "-04:30", "-04", "-03:30", "-03", "-02:30", "-02", "-01", "0", "+01", "+02", "+03", "+03:30", "+04", "+04:30", "+05", "+05:30", "+05:45", "+06", "+06:30", "+07", "+08", "+08:45", "+09", "+09:30", "+10", "+10:30", "+11", "+11:30", "+12", "+12:45", "+13", "+13:45", "+14"];
+  var UTCCities = ["Baker Island", "Jarvis Island", "Honolulu", "Marquesas Islands", "Anchorage", "Los Angeles", "Phoenix", "Chicago", "New York", "Caracas", "Santiago", "St. John's", "Buenos Aires", "Newfoundland", "Fernando de Noronha", "ittoqqortoormiit", "London", "Belgrade", "Athens", "Nairobi", "Tehran", "Dubai", "Kabul", "Karachi", "Dehli", "Kathmandu", "Dhaka", "Yangon", "Jakarta", "Perth", "Eucla", "Tokyo", "Adelaide", "Canberra", "Lord Howe Island", "Vladivostok", "Norfolk Island", "Auckland", "Chatham Islands", "Samoa", "Chatham Islands", "Line Islands"];
+
+  var inputTime = $('#time').val() * 3600000;
+  var date = new Date();
+  
+  // determine UTC time
+  var currentTime = date.getTime(); //get local time
+  var currentOffset = date.getTimezoneOffset() * 60000; //get local offset in milliseconds
+  currentTime = (currentTime + currentOffset) / 1000; //currentTime is UTC
+
+  // get input values
+  var firstCity, secondCity;
+
+  // determine first City or Timezone
+  if($('.input-group-1').get(0).style.cssText === 'display: none;'){
+    // grab end of timezone string for UTC value
+    firstCity = $('#firstTimezone').val();
+    firstCity = firstCity.substr(firstCity.lastIndexOf('|') + 2);
+    firstCity = UTCCities[UTCs.indexOf(firstCity)]; // find corresponding city to timezone
+  } else {
+    // grab city string for ajax call
+    firstCity = encodeURIComponent($('#firstCity').val());
+  };
+
+  // determine second city or timezone
+  if($('.input-group-2').get(0).style.cssText === 'display: none;'){
+    secondCity = $('#secondTimezone').val();
+    secondCity = secondCity.substr(secondCity.lastIndexOf('|') + 2);
+    secondCity = UTCCities[UTCs.indexOf(secondCity)];
+  } else {
+    secondCity = encodeURIComponent($('#secondCity').val());
+  };
+
+  // begin Ajax calls
+      $.ajax({
+        url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + firstCity + "&sensor=false",
+        success: function (data, textStatus, jqXHR) {
+
+            var lat1 = data.results[0].geometry.location.lat;
+            var lng1 = data.results[0].geometry.location.lng;
+            $.ajax({
+                url: "https://maps.googleapis.com/maps/api/timezone/json?sensor=false&location=" + lat1 + "," + lng1 + "&timestamp=" + currentTime,
+                success: function (data1, textStatus, jqXHR) {
+                    var firstCityTimeZone = data1.timeZoneName;
+                    var firstCityTime = currentTime + (data1.dstOffset + data1.rawOffset);
+                    $.ajax({
+                        url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + secondCity + "&sensor=false",
+                        success: function (data2, text, jqXHR) {
+                            var lat2 = data2.results[0].geometry.location.lat;
+                            var lng2 = data2.results[0].geometry.location.lng;
+                            $.ajax({
+                                url: "https://maps.googleapis.com/maps/api/timezone/json?sensor=false&location=" + lat2 + "," + lng2 + "&timestamp=" + currentTime,
+                                success: function (data3, text, jqXHR) {
+                                    var secondCityTimeZone = data2.timeZoneName;
+                                    var secondCityTime = currentTime + (data3.dstOffset + data3.rawOffset);
+                                    var totalOffsetTime = inputTime + (secondCityTime * 1000 - firstCityTime * 1000);
+                                    totalOffsetTime = Math.abs(totalOffsetTime / 1000 / 60 / 60);
+
+                                    var answer;
+                                    if (totalOffsetTime === 36) {
+                                        answer = "12 PM next day";
+                                    } else
+                                    if (totalOffsetTime > 36) {
+                                        answer = (totalOffsetTime - 36) + " PM next day";
+                                    } else
+                                    if (totalOffsetTime === 24) {
+                                        answer = "12 AM next day";
+                                    } else
+                                    if (totalOffsetTime > 24) {
+                                        answer = (totalOffsetTime - 24) + " AM next day";
+                                    } else 
+                                    if (totalOffsetTime > 12) {
+                                        answer = (totalOffsetTime - 12) + " PM";
+                                    } else 
+                                    if (totalOffsetTime === 12) {
+                                      answer = "12 PM";
+                                    } else
+                                    if (totalOffsetTime === 0){
+                                      answer = "12 AM";
+                                    } else {
+                                        answer = totalOffsetTime + " AM";
+                                      }
+                  
+                                    document.getElementById("results").innerHTML = "The time will be " + answer;
+                                }    
+                            });
+                        }
+                    });
+                }
+            });
+        }
+     });
+
+}

@@ -30,8 +30,10 @@ p{
 
 .button-xlarge.pure-button {
 	font-size: 125%;
-	 background: rgba(28, 184, 65, .48);
-	 margin-top: 55px;
+	 background: rgba(215, 196, 165, .68);
+	 margin-top: 1.3em;
+	 border: solid 1px black;
+	 border-radius: 4px;
 }
 .citySwitch{
 	width: 30px;
@@ -43,7 +45,7 @@ height: 15px;
 padding-top: 5px;
 }
 .timeController{
-	margin-left: -30%;
+	margin-left: -11em;
 }
 .pure-form-aligned .pure-control-group {
 	margin-bottom: 1em !important;
@@ -77,6 +79,20 @@ background:rgba(173,216,230,.8);
 	display: none;
 }
 .ui-menu-item{
-	line-height: 2em;
-	border-bottom: solid rgb(25,25,25) 1px;
+	cursor: default;
+padding: 0 4px;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+line-height: 30px;
+text-align: left;
+border-top: 1px solid #e6e6e6;
+font-size: 11px;
+font-color: rgb(0,0,0);
+}
+#results{
+	font-size: 2em;
+}
+legend{
+	margin-bottom: 1.3em !important;
 }

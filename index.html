@@ -80,8 +80,8 @@
                 <button class="citySwitch citySwitch2"><img src="img/globe.ico" alt=""></button>
               </div>
               
-
-              <button type="submit" class="button-xlarge pure-button">Convert</button>
+              <div id="results"></div>
+              <button id='convert' class="button-xlarge pure-button">Convert</button>
           </fieldset>
         </form>
 
@@ -174,7 +174,7 @@
             "EEDT | Eastern European Daylight Time | +03",
             "EEST | Eastern European Summer Time | +03",
             "EET | Eastern European Time | +02",
-            "EGST | Eastern Greenland Summer Time",
+            "EGST | Eastern Greenland Summer Time | 0",
             "EGT | Eastern Greenland Time | -01",
             "EIT | Eastern Indonesian Time | +09",
             "EST | Eastern Standard Time (North America) | -05",
@@ -191,7 +191,7 @@
             "GFT | French Guiana Time | -03",
             "GILT | Gilbert Island Time | +12",
             "GIT | Gambier Island Time | -09",
-            "GMT | Greenwich Mean Time",
+            "GMT | Greenwich Mean Time | 0",
             "GST | South Georgia and the South Sandwich Islands | -02",
             "GST | Gulf Standard Time | +04",
             "GYT | Guyana Time | -04",
@@ -282,7 +282,7 @@
             "TMT | Turkmenistan Time | +05",
             "TOT | Tonga Time | +13",
             "TVT | Tuvalu Time | +12",
-            "UCT | Coordinated Universal Time",
+            "UCT | Coordinated Universal Time | 0",
             "ULAT | Ulaanbaatar Time | +08",
             "UTC | Coordinated Universal Time",
             "UYST | Uruguay Summer Time | -02",
@@ -298,11 +298,11 @@
             "WAT | West Africa Time | +01",
             "WEDT | Western European Daylight Time | +01",
             "WEST | Western European Summer Time | +01",
-            "WET | Western European Time",
+            "WET | Western European Time | 0",
             "WST | Western Standard Time | +08",
             "YAKT | Yakutsk Time | +10",
             "YEKT | Yekaterinburg Time | +06",
-            "Z | Zulu Time (Coordinated Universal Time)"
+            "Z | Zulu Time (Coordinated Universal Time) | 0"
           ];
     $( "#firstTimezone" ).autocomplete({
       source: function(request, response) {
@@ -321,6 +321,8 @@
 
 
   });
+
+ 
   </script>
 
 
